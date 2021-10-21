@@ -17,3 +17,4 @@ Increase/decrease the volume on your SinusBot
 This plugin uses some awesome 3rd party libraries:
 - [Newtonsoft.Json (MIT license)](https://www.newtonsoft.com/json)
 - [RestSharp (Apache-2.0)](https://restsharp.dev/)
+- [SinusBot logo in the icon (Creative-Commons)](https://de.m.wikipedia.org/wiki/Datei:SinusBot.png)
