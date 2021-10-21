@@ -73,9 +73,9 @@ namespace SuchByte.SinusBotPlugin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sinusbotlogo_e1568901044352 {
+        internal static System.Drawing.Bitmap SinusBot_Plugin {
             get {
-                object obj = ResourceManager.GetObject("sinusbotlogo_e1568901044352", resourceCulture);
+                object obj = ResourceManager.GetObject("SinusBot_Plugin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

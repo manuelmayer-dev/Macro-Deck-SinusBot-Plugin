@@ -17,20 +17,9 @@ namespace SuchByte.SinusBotPlugin
     public class Main : MacroDeckPlugin
     {
         public static Sinusbot Sinusbot;
-
-        public Main()
-        {
-            
-        }
-
         public override string Description => "This plugin can control a SinusBot music bot.";
-
-        public override List<PluginAction> Actions { get; set; }
-
         public override bool CanConfigure => true;
-
-        public override Image Icon => Properties.Resources.sinusbotlogo_e1568901044352;
-
+        public override Image Icon => Properties.Resources.SinusBot_Plugin;
         public override void Enable() {
             Task.Run(() =>
             {
@@ -53,21 +42,12 @@ namespace SuchByte.SinusBotPlugin
                 new DecreaseVolumeAction(),
                 new IncreaseVolumeAction()
             };
-
         }
 
         public override void OpenConfigurator()
         {
             new PluginConfig(this).ShowDialog();
         }
-
-    }
-
-    public class PlayBackStartedEvent : IMacroDeckEvent
-    {
-        public string Name => "SinusBot Playback started";
-
-        public EventHandler<MacroDeckEventArgs> OnEvent { get; set; }
     }
 
     public class IncreaseVolumeAction : PluginAction
