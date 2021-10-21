@@ -29,7 +29,7 @@ namespace SuchByte.SinusBotPlugin
 
         public override bool CanConfigure => true;
 
-        public override Image Icon => Properties.Resources.sinusbotlogo_e1568901044352;
+        public override Image Icon => Properties.Resources.SinusBot_Plugin;
 
         public override void Enable() {
             Task.Run(() =>
