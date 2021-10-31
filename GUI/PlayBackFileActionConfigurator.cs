@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Utils;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using SuchByte.MacroDeck.GUI;
 
 namespace SuchByte.SinusBotPlugin.GUI
 {
@@ -26,11 +28,13 @@ namespace SuchByte.SinusBotPlugin.GUI
 
         PluginAction _macroDeckAction;
 
-        public PlayBackFileActionConfigurator(PluginAction macroDeckAction)
+        public PlayBackFileActionConfigurator(PluginAction macroDeckAction, ActionConfigurator actionConfigurator)
         {
             this._macroDeckAction = macroDeckAction;
             InitializeComponent();
-            if (this._macroDeckAction.Configuration.Length > 0)
+
+
+            if (this._macroDeckAction.Configuration != null && !String.IsNullOrWhiteSpace(this._macroDeckAction.Configuration))
             {
                 JObject currentConfiguration = JObject.Parse(this._macroDeckAction.Configuration);
                 this.InstanceId = currentConfiguration["instanceId"].ToString();
@@ -43,6 +47,13 @@ namespace SuchByte.SinusBotPlugin.GUI
                     this.FileTitle = Main.Sinusbot.GetFileTitle(this.FileId);
                 } catch { }
             }
+
+            actionConfigurator.ActionSave += OnActionSave;
+        }
+
+        private void OnActionSave(object sender, EventArgs e)
+        {
+            UpdateConfig();
         }
 
 
@@ -130,21 +141,11 @@ namespace SuchByte.SinusBotPlugin.GUI
         {
             this.lblVolume.Text = String.Format("{0}%", this.playBackVolume.Value);
             this.Volume = this.playBackVolume.Value;
-            this.UpdateConfig();
         }
 
         private void CheckSetVolume_CheckedChanged(object sender, EventArgs e)
         {
             this.playBackVolume.Enabled = this.checkSetVolume.Checked;
-            if (this.checkSetVolume.Checked)
-            {
-                this.Volume = this.playBackVolume.Value;
-            }
-            else
-            {
-                this.Volume = -1;
-            }
-            this.UpdateConfig();
         }
 
         private void Search_TextChanged(object sender, EventArgs e)
@@ -158,11 +159,15 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.FileId = Main.Sinusbot.GetFileId(this.fileList.Text);
             this.InstanceName = this.instanceBox.Text;
             this.FileTitle = this.fileList.Text;
-            this.UpdateConfig();
         }
 
         private void UpdateConfig()
         {
+            if (String.IsNullOrWhiteSpace(this.InstanceId) || String.IsNullOrWhiteSpace(this.FileId))
+            {
+                return;
+            }
+            this.Volume = this.checkSetVolume.Checked ? this.playBackVolume.Value : -1;
             JObject configurationObject = JObject.FromObject(new
             {
                 instanceId = this.InstanceId,

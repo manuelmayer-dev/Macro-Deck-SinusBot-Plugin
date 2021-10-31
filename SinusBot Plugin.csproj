@@ -5,7 +5,7 @@
     <RootNamespace>SuchByte.SinusBotPlugin</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <SignAssembly>false</SignAssembly>
-    <Version>1.0.4-beta</Version>
+    <Version>1.0.5-beta</Version>
     <RepositoryUrl>https://github.com/SuchByte/Macro-Deck-SinusBot-Plugin</RepositoryUrl>
     <Authors>Macro Deck</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

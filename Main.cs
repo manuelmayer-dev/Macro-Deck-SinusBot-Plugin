@@ -153,7 +153,7 @@ namespace SuchByte.SinusBotPlugin
 
         public override ActionConfigControl GetActionConfigControl(ActionConfigurator actionConfigurator)
         {
-            return new PlayBackFileActionConfigurator(this);
+            return new PlayBackFileActionConfigurator(this, actionConfigurator);
         }
     }
 }

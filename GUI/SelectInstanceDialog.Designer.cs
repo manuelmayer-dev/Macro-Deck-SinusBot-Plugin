@@ -1,4 +1,6 @@
 ﻿
+using SuchByte.MacroDeck.GUI.CustomControls;
+
 namespace SuchByte.SinusBotPlugin.GUI
 {
     partial class SelectInstanceDialog
@@ -30,30 +32,35 @@ namespace SuchByte.SinusBotPlugin.GUI
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.instanceBox = new System.Windows.Forms.ComboBox();
+            this.instanceBox = new SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox();
             this.SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 10);
+            this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(0, 120);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 23);
+            this.label1.Size = new System.Drawing.Size(122, 30);
             this.label1.TabIndex = 6;
             this.label1.Text = "Instance:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // instanceBox
             // 
-            this.instanceBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.instanceBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.instanceBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.instanceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.instanceBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.instanceBox.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.instanceBox.ForeColor = System.Drawing.Color.White;
-            this.instanceBox.FormattingEnabled = true;
-            this.instanceBox.Location = new System.Drawing.Point(4, 46);
-            this.instanceBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.instanceBox.Icon = null;
+            this.instanceBox.Location = new System.Drawing.Point(130, 120);
+            this.instanceBox.Margin = new System.Windows.Forms.Padding(4);
             this.instanceBox.Name = "instanceBox";
-            this.instanceBox.Size = new System.Drawing.Size(444, 31);
+            this.instanceBox.Padding = new System.Windows.Forms.Padding(8, 2, 8, 2);
+            this.instanceBox.SelectedIndex = -1;
+            this.instanceBox.SelectedItem = null;
+            this.instanceBox.Size = new System.Drawing.Size(293, 30);
             this.instanceBox.TabIndex = 5;
             this.instanceBox.SelectedIndexChanged += new System.EventHandler(this.InstanceBox_SelectedIndexChanged);
             // 
@@ -67,13 +74,12 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.Name = "SelectInstanceDialog";
             this.Load += new System.EventHandler(this.StopPlayBackConfigurator_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox instanceBox;
+        private RoundedComboBox instanceBox;
     }
 }
