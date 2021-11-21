@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using SuchByte.MacroDeck.Plugins;
 using System.Threading.Tasks;
+using SuchByte.SinusBotPlugin.Language;
 
 namespace SuchByte.SinusBotPlugin.GUI
 {
@@ -20,6 +21,12 @@ namespace SuchByte.SinusBotPlugin.GUI
         {
             this._macroDeckAction = macroDeckAction;
             InitializeComponent();
+
+            this.lblInstance.Text = PluginLanguageManager.PluginStrings.Instance;
+            Task.Run(() =>
+            {
+                this.LoadInstances();
+            });
         }
 
         private void LoadInstances()
@@ -30,7 +37,7 @@ namespace SuchByte.SinusBotPlugin.GUI
                 {
                     using (var msgBox = new MacroDeck.GUI.CustomControls.MessageBox())
                     {
-                        msgBox.ShowDialog("Not ready", "SinusBot plugin is not configured. Please go to the package manager and configure the SinusBot plugin.", MessageBoxButtons.OK);
+                        msgBox.ShowDialog(PluginLanguageManager.PluginStrings.NotReady, PluginLanguageManager.PluginStrings.SinusBotNotConfigured, MessageBoxButtons.OK);
                     }
                 }));
 
@@ -48,19 +55,11 @@ namespace SuchByte.SinusBotPlugin.GUI
             
         }
 
-
-        private void StopPlayBackConfigurator_Load(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                this.LoadInstances();
-            });
-        }
-
-        private void InstanceBox_SelectedIndexChanged(object sender, EventArgs e)
+        public override bool OnActionSave()
         {
             string instanceId = Main.Sinusbot.GetInstanceId(this.instanceBox.Text);
             string instanceName = instanceBox.Text;
+            if (String.IsNullOrWhiteSpace(instanceId) || String.IsNullOrWhiteSpace(instanceName)) return false;
 
             JObject configurationObject = JObject.FromObject(new
             {
@@ -68,7 +67,11 @@ namespace SuchByte.SinusBotPlugin.GUI
             });
 
             this._macroDeckAction.Configuration = configurationObject.ToString();
-            this._macroDeckAction.DisplayName = this._macroDeckAction.Name + " -> " + instanceName;
+            this._macroDeckAction.ConfigurationSummary = instanceName;
+            return true;
         }
+
+
+
     }
 }

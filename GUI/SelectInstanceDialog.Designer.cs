@@ -31,20 +31,20 @@ namespace SuchByte.SinusBotPlugin.GUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblInstance = new System.Windows.Forms.Label();
             this.instanceBox = new SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox();
             this.SuspendLayout();
             // 
-            // label1
+            // lblInstance
             // 
-            this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(0, 120);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(122, 30);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Instance:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblInstance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblInstance.Location = new System.Drawing.Point(111, 120);
+            this.lblInstance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInstance.Name = "lblInstance";
+            this.lblInstance.Size = new System.Drawing.Size(122, 30);
+            this.lblInstance.TabIndex = 6;
+            this.lblInstance.Text = "Instance:";
+            this.lblInstance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // instanceBox
             // 
@@ -54,32 +54,30 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.instanceBox.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.instanceBox.ForeColor = System.Drawing.Color.White;
             this.instanceBox.Icon = null;
-            this.instanceBox.Location = new System.Drawing.Point(130, 120);
+            this.instanceBox.Location = new System.Drawing.Point(241, 120);
             this.instanceBox.Margin = new System.Windows.Forms.Padding(4);
             this.instanceBox.Name = "instanceBox";
             this.instanceBox.Padding = new System.Windows.Forms.Padding(8, 2, 8, 2);
             this.instanceBox.SelectedIndex = -1;
             this.instanceBox.SelectedItem = null;
-            this.instanceBox.Size = new System.Drawing.Size(293, 30);
+            this.instanceBox.Size = new System.Drawing.Size(363, 30);
             this.instanceBox.TabIndex = 5;
-            this.instanceBox.SelectedIndexChanged += new System.EventHandler(this.InstanceBox_SelectedIndexChanged);
             // 
             // SelectInstanceDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblInstance);
             this.Controls.Add(this.instanceBox);
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "SelectInstanceDialog";
-            this.Load += new System.EventHandler(this.StopPlayBackConfigurator_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblInstance;
         private RoundedComboBox instanceBox;
     }
 }

@@ -32,12 +32,13 @@ namespace SuchByte.SinusBotPlugin.GUI
         private void InitializeComponent()
         {
             this.instanceBox = new SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblInstance = new System.Windows.Forms.Label();
             this.fileList = new System.Windows.Forms.ListBox();
             this.playBackVolume = new System.Windows.Forms.TrackBar();
             this.checkSetVolume = new System.Windows.Forms.CheckBox();
             this.lblVolume = new System.Windows.Forms.Label();
             this.search = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
+            this.checkSyncButtonState = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.playBackVolume)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,16 +60,16 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.instanceBox.TabIndex = 3;
             this.instanceBox.SelectedIndexChanged += new System.EventHandler(this.InstanceBox_SelectedIndexChanged);
             // 
-            // label1
+            // lblInstance
             // 
-            this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(0, 1);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(122, 30);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Instance:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblInstance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblInstance.Location = new System.Drawing.Point(0, 1);
+            this.lblInstance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInstance.Name = "lblInstance";
+            this.lblInstance.Size = new System.Drawing.Size(122, 30);
+            this.lblInstance.TabIndex = 4;
+            this.lblInstance.Text = "Instance:";
+            this.lblInstance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // fileList
             // 
@@ -89,12 +90,12 @@ namespace SuchByte.SinusBotPlugin.GUI
             // 
             this.playBackVolume.AutoSize = false;
             this.playBackVolume.Enabled = false;
-            this.playBackVolume.Location = new System.Drawing.Point(259, 247);
+            this.playBackVolume.Location = new System.Drawing.Point(175, 246);
             this.playBackVolume.Margin = new System.Windows.Forms.Padding(4);
             this.playBackVolume.Maximum = 100;
             this.playBackVolume.Minimum = 1;
             this.playBackVolume.Name = "playBackVolume";
-            this.playBackVolume.Size = new System.Drawing.Size(263, 43);
+            this.playBackVolume.Size = new System.Drawing.Size(143, 43);
             this.playBackVolume.TabIndex = 7;
             this.playBackVolume.TickStyle = System.Windows.Forms.TickStyle.None;
             this.playBackVolume.Value = 50;
@@ -102,12 +103,11 @@ namespace SuchByte.SinusBotPlugin.GUI
             // 
             // checkSetVolume
             // 
-            this.checkSetVolume.AutoSize = true;
             this.checkSetVolume.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.checkSetVolume.Location = new System.Drawing.Point(151, 247);
+            this.checkSetVolume.Location = new System.Drawing.Point(7, 246);
             this.checkSetVolume.Margin = new System.Windows.Forms.Padding(4);
             this.checkSetVolume.Name = "checkSetVolume";
-            this.checkSetVolume.Size = new System.Drawing.Size(100, 22);
+            this.checkSetVolume.Size = new System.Drawing.Size(160, 22);
             this.checkSetVolume.TabIndex = 8;
             this.checkSetVolume.Text = "Set volume";
             this.checkSetVolume.UseVisualStyleBackColor = true;
@@ -117,7 +117,7 @@ namespace SuchByte.SinusBotPlugin.GUI
             // 
             this.lblVolume.AutoSize = true;
             this.lblVolume.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblVolume.Location = new System.Drawing.Point(530, 250);
+            this.lblVolume.Location = new System.Drawing.Point(326, 249);
             this.lblVolume.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblVolume.Name = "lblVolume";
             this.lblVolume.Size = new System.Drawing.Size(33, 16);
@@ -132,6 +132,7 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.search.ForeColor = System.Drawing.Color.White;
             this.search.Icon = global::SuchByte.SinusBotPlugin.Properties.Resources.magnifying_glass;
             this.search.Location = new System.Drawing.Point(430, 31);
+            this.search.MaxCharacters = 32767;
             this.search.Multiline = false;
             this.search.Name = "search";
             this.search.Padding = new System.Windows.Forms.Padding(26, 5, 8, 5);
@@ -145,16 +146,27 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.search.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.search.TextChanged += new System.EventHandler(this.Search_TextChanged);
             // 
+            // checkSyncButtonState
+            // 
+            this.checkSyncButtonState.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.checkSyncButtonState.Location = new System.Drawing.Point(442, 247);
+            this.checkSyncButtonState.Name = "checkSyncButtonState";
+            this.checkSyncButtonState.Size = new System.Drawing.Size(269, 21);
+            this.checkSyncButtonState.TabIndex = 11;
+            this.checkSyncButtonState.Text = "Button state = play state";
+            this.checkSyncButtonState.UseVisualStyleBackColor = true;
+            // 
             // PlayBackFileActionConfigurator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkSyncButtonState);
             this.Controls.Add(this.search);
             this.Controls.Add(this.lblVolume);
             this.Controls.Add(this.checkSetVolume);
             this.Controls.Add(this.playBackVolume);
             this.Controls.Add(this.fileList);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblInstance);
             this.Controls.Add(this.instanceBox);
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "PlayBackFileActionConfigurator";
@@ -169,11 +181,12 @@ namespace SuchByte.SinusBotPlugin.GUI
         #endregion
 
         private RoundedComboBox instanceBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblInstance;
         private System.Windows.Forms.ListBox fileList;
         private System.Windows.Forms.TrackBar playBackVolume;
         private System.Windows.Forms.CheckBox checkSetVolume;
         private System.Windows.Forms.Label lblVolume;
         private RoundedTextBox search;
+        private System.Windows.Forms.CheckBox checkSyncButtonState;
     }
 }

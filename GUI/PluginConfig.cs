@@ -1,5 +1,7 @@
 ﻿using SuchByte.MacroDeck.GUI.CustomControls;
+using SuchByte.MacroDeck.Language;
 using SuchByte.MacroDeck.Plugins;
+using SuchByte.SinusBotPlugin.Language;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +21,10 @@ namespace SuchByte.SinusBotPlugin.GUI
         {
             this.main = main;
             InitializeComponent();
+
+            this.lblUrl.Text = PluginLanguageManager.PluginStrings.Url;
+            this.lblUser.Text = PluginLanguageManager.PluginStrings.User;
+            this.lblPassword.Text = PluginLanguageManager.PluginStrings.Password;
         }
 
         private void PluginConfig_Load(object sender, EventArgs e)
@@ -38,11 +44,11 @@ namespace SuchByte.SinusBotPlugin.GUI
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
-            if (this.inputUrl.Text.Length == 0)
+            if (String.IsNullOrWhiteSpace(this.inputUrl.Text))
             {
-                using (var messageBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox())
+                using (var messageBox = new MacroDeck.GUI.CustomControls.MessageBox())
                 {
-                    messageBox.ShowDialog("Unable to connect to the SinusBot", "The url cannot be empty", MessageBoxButtons.OK);
+                    messageBox.ShowDialog(LanguageManager.Strings.Error, PluginLanguageManager.PluginStrings.UrlCannotBeEmpty, MessageBoxButtons.OK);
                 }
                 return;
             }
@@ -67,7 +73,7 @@ namespace SuchByte.SinusBotPlugin.GUI
                         Cursor.Current = Cursors.Default;
                         using (var messageBox = new MacroDeck.GUI.CustomControls.MessageBox())
                         {
-                            messageBox.ShowDialog("Success", "Successfully connected to the SinusBot server.", MessageBoxButtons.OK);
+                            messageBox.ShowDialog(LanguageManager.Strings.Info, PluginLanguageManager.PluginStrings.SuccessFullyConnected , MessageBoxButtons.OK);
                         }
                         this.DialogResult = DialogResult.OK;
                         this.Close();
@@ -80,7 +86,7 @@ namespace SuchByte.SinusBotPlugin.GUI
                     {
                         using (var messageBox = new MacroDeck.GUI.CustomControls.MessageBox())
                         {
-                            messageBox.ShowDialog("Unable to connect to the SinusBot", "Perhaps the url, username or password is wrong?", MessageBoxButtons.OK);
+                            messageBox.ShowDialog(LanguageManager.Strings.Error, PluginLanguageManager.PluginStrings.UnableToConnect, MessageBoxButtons.OK);
                         }
                         this.btnOk.Enabled = true;
                     }));

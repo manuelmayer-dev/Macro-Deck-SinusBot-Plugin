@@ -5,11 +5,21 @@
     <RootNamespace>SuchByte.SinusBotPlugin</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <SignAssembly>false</SignAssembly>
-    <Version>1.0.5-beta</Version>
+    <Version>1.2.0</Version>
     <RepositoryUrl>https://github.com/SuchByte/Macro-Deck-SinusBot-Plugin</RepositoryUrl>
     <Authors>Macro Deck</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Languages\English.xml" />
+    <None Remove="Resources\Languages\German.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Languages\English.xml" />
+    <EmbeddedResource Include="Resources\Languages\German.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -19,7 +29,7 @@
 
   <ItemGroup>
     <Reference Include="Macro Deck 2">
-      <HintPath>..\..\Macro Deck 2\Macro Deck 2\bin\Debug\netcoreapp3.1\Macro Deck 2.dll</HintPath>
+      <HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
     </Reference>
   </ItemGroup>
 

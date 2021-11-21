@@ -31,25 +31,24 @@ namespace SuchByte.SinusBotPlugin.GUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblUrl = new System.Windows.Forms.Label();
             this.inputUrl = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.inputUser = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblUser = new System.Windows.Forms.Label();
             this.inputPassword = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
             this.btnOk = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.SuspendLayout();
             // 
-            // label1
+            // lblUrl
             // 
-            this.label1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(4, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 29);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Url:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblUrl.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblUrl.Location = new System.Drawing.Point(4, 17);
+            this.lblUrl.Name = "lblUrl";
+            this.lblUrl.Size = new System.Drawing.Size(91, 29);
+            this.lblUrl.TabIndex = 3;
+            this.lblUrl.Text = "Url:";
+            this.lblUrl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // inputUrl
             // 
@@ -59,27 +58,18 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.inputUrl.ForeColor = System.Drawing.Color.White;
             this.inputUrl.Icon = null;
             this.inputUrl.Location = new System.Drawing.Point(101, 17);
+            this.inputUrl.MaxCharacters = 32767;
             this.inputUrl.Multiline = false;
             this.inputUrl.Name = "inputUrl";
             this.inputUrl.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
             this.inputUrl.PasswordChar = false;
             this.inputUrl.PlaceHolderColor = System.Drawing.Color.Gray;
-            this.inputUrl.PlaceHolderText = "";
+            this.inputUrl.PlaceHolderText = "http://<hostname>:8087";
             this.inputUrl.ReadOnly = false;
             this.inputUrl.SelectionStart = 0;
             this.inputUrl.Size = new System.Drawing.Size(376, 29);
             this.inputUrl.TabIndex = 4;
             this.inputUrl.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(113, 49);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(175, 14);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "e.g. http://<hostname>:8087";
             // 
             // inputUser
             // 
@@ -88,7 +78,8 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.inputUser.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.inputUser.ForeColor = System.Drawing.Color.White;
             this.inputUser.Icon = null;
-            this.inputUser.Location = new System.Drawing.Point(101, 73);
+            this.inputUser.Location = new System.Drawing.Point(101, 52);
+            this.inputUser.MaxCharacters = 32767;
             this.inputUser.Multiline = false;
             this.inputUser.Name = "inputUser";
             this.inputUser.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
@@ -101,15 +92,15 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.inputUser.TabIndex = 7;
             this.inputUser.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // label4
+            // lblUser
             // 
-            this.label4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(4, 73);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 29);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "User:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblUser.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblUser.Location = new System.Drawing.Point(4, 52);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(91, 29);
+            this.lblUser.TabIndex = 6;
+            this.lblUser.Text = "User:";
+            this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // inputPassword
             // 
@@ -118,7 +109,8 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.inputPassword.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.inputPassword.ForeColor = System.Drawing.Color.White;
             this.inputPassword.Icon = null;
-            this.inputPassword.Location = new System.Drawing.Point(101, 108);
+            this.inputPassword.Location = new System.Drawing.Point(101, 87);
+            this.inputPassword.MaxCharacters = 32767;
             this.inputPassword.Multiline = false;
             this.inputPassword.Name = "inputPassword";
             this.inputPassword.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
@@ -131,15 +123,15 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.inputPassword.TabIndex = 9;
             this.inputPassword.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // label5
+            // lblPassword
             // 
-            this.label5.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(4, 108);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 29);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Password:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPassword.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPassword.Location = new System.Drawing.Point(4, 87);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(91, 29);
+            this.lblPassword.TabIndex = 8;
+            this.lblPassword.Text = "Password:";
+            this.lblPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnOk
             // 
@@ -152,7 +144,7 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(89)))), ((int)(((byte)(184)))));
             this.btnOk.Icon = null;
-            this.btnOk.Location = new System.Drawing.Point(432, 143);
+            this.btnOk.Location = new System.Drawing.Point(431, 122);
             this.btnOk.Name = "btnOk";
             this.btnOk.Progress = 0;
             this.btnOk.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(46)))), ((int)(((byte)(94)))));
@@ -166,40 +158,36 @@ namespace SuchByte.SinusBotPlugin.GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 178);
+            this.ClientSize = new System.Drawing.Size(520, 158);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.inputPassword);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.inputUser);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblUser);
             this.Controls.Add(this.inputUrl);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblUrl);
             this.Name = "PluginConfig";
             this.Text = "PluginConfig";
             this.Load += new System.EventHandler(this.PluginConfig_Load);
-            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.lblUrl, 0);
             this.Controls.SetChildIndex(this.inputUrl, 0);
-            this.Controls.SetChildIndex(this.label3, 0);
-            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.lblUser, 0);
             this.Controls.SetChildIndex(this.inputUser, 0);
-            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.lblPassword, 0);
             this.Controls.SetChildIndex(this.inputPassword, 0);
             this.Controls.SetChildIndex(this.btnOk, 0);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblUrl;
         private RoundedTextBox inputUrl;
-        private System.Windows.Forms.Label label3;
         private RoundedTextBox inputUser;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblUser;
         private RoundedTextBox inputPassword;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblPassword;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary btnOk;
     }
 }

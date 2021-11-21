@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<PluginStrings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<__Language__>English</__Language__>
+	<__LanguageCode__>en</__LanguageCode__>
+	<__Author__>Macro Deck</__Author__>
+
+	<ActionIncreaseVolume>Increase volume</ActionIncreaseVolume>
+	<ActionIncreaseVolumeDescription>Increases the bot volume by 5%</ActionIncreaseVolumeDescription>
+	<ActionDecreaseVolume>Decrease volume</ActionDecreaseVolume>
+	<ActionDecreaseVolumeDescription>Decreases the bot volume by 5%</ActionDecreaseVolumeDescription>
+	<ActionStopPlayBack>Stop playback</ActionStopPlayBack>
+	<ActionStopPlayBackDescription>Stops the playback</ActionStopPlayBackDescription>
+	<ActionPlayBackFile>Playback file</ActionPlayBackFile>
+	<ActionPlayBackFileDescription>Starting the playback of a file</ActionPlayBackFileDescription>
+	<NotReady>Not ready</NotReady>
+	<SinusBotNotConfigured>SinusBot plugin is not configured. Please go to the package manager and configure the SinusBot plugin.</SinusBotNotConfigured>
+	<Instance>Instance</Instance>
+	<SetVolume>Set volume</SetVolume>
+	<SyncButtonState>Button state = play state</SyncButtonState>
+	<Url>Url</Url>
+	<User>User</User>
+	<Password>Password</Password>
+	<UrlCannotBeEmpty>The url field cannot be empty</UrlCannotBeEmpty>
+	<SuccessFullyConnected>Successfully connected to the SinusBot server</SuccessFullyConnected>
+	<UnableToConnect>Unable to connect to the SinusBot server. Perhaps the url, username or password is wrong?</UnableToConnect>
+	
+	
+	
+	
+	
+	
+	
+</PluginStrings>

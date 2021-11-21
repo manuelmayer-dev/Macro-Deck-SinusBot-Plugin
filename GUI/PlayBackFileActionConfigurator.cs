@@ -12,6 +12,8 @@ using SuchByte.MacroDeck.Utils;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using SuchByte.MacroDeck.GUI;
+using SuchByte.SinusBotPlugin.Language;
+using SuchByte.MacroDeck.Language;
 
 namespace SuchByte.SinusBotPlugin.GUI
 {
@@ -32,7 +34,10 @@ namespace SuchByte.SinusBotPlugin.GUI
         {
             this._macroDeckAction = macroDeckAction;
             InitializeComponent();
-
+            this.search.PlaceHolderText = LanguageManager.Strings.Search;
+            this.lblInstance.Text = PluginLanguageManager.PluginStrings.Instance;
+            this.checkSetVolume.Text = PluginLanguageManager.PluginStrings.SetVolume;
+            this.checkSyncButtonState.Text = PluginLanguageManager.PluginStrings.SyncButtonState;
 
             if (this._macroDeckAction.Configuration != null && !String.IsNullOrWhiteSpace(this._macroDeckAction.Configuration))
             {
@@ -40,6 +45,10 @@ namespace SuchByte.SinusBotPlugin.GUI
                 this.InstanceId = currentConfiguration["instanceId"].ToString();
                 this.FileId = currentConfiguration["fileId"].ToString();
                 this.Volume = Int32.Parse(currentConfiguration["volume"].ToString());
+                if (currentConfiguration["syncButtonState"] != null)
+                {
+                    this.checkSyncButtonState.Checked = bool.Parse(currentConfiguration["syncButtonState"].ToString());
+                }
                 
                 try
                 {
@@ -47,13 +56,25 @@ namespace SuchByte.SinusBotPlugin.GUI
                     this.FileTitle = Main.Sinusbot.GetFileTitle(this.FileId);
                 } catch { }
             }
-
-            actionConfigurator.ActionSave += OnActionSave;
         }
 
-        private void OnActionSave(object sender, EventArgs e)
+        public override bool OnActionSave()
         {
-            UpdateConfig();
+            if (String.IsNullOrWhiteSpace(this.InstanceId) || String.IsNullOrWhiteSpace(this.FileId))
+            {
+                return false;
+            }
+            this.Volume = this.checkSetVolume.Checked ? this.playBackVolume.Value : -1;
+            JObject configurationObject = JObject.FromObject(new
+            {
+                instanceId = this.InstanceId,
+                fileId = this.FileId,
+                volume = this.Volume,
+                syncButtonState = this.checkSyncButtonState.Checked,
+            }) ;
+            this._macroDeckAction.Configuration = configurationObject.ToString();
+            this._macroDeckAction.ConfigurationSummary = this.InstanceName + " : " + this.FileTitle + (this.Volume > -1 ? String.Format(" : {0}%", this.Volume) : "") + (this.checkSyncButtonState.Checked ? " (button state = play state)" : "");
+            return true;
         }
 
 
@@ -86,7 +107,7 @@ namespace SuchByte.SinusBotPlugin.GUI
                 {
                     using (var msgBox = new MacroDeck.GUI.CustomControls.MessageBox())
                     {
-                        msgBox.ShowDialog("Not ready", "SinusBot plugin is not configured. Please go to the package manager and configure the SinusBot plugin.", MessageBoxButtons.OK);
+                        msgBox.ShowDialog(PluginLanguageManager.PluginStrings.NotReady, PluginLanguageManager.PluginStrings.SinusBotNotConfigured, MessageBoxButtons.OK);
                     }
                 }));
                 
@@ -161,21 +182,5 @@ namespace SuchByte.SinusBotPlugin.GUI
             this.FileTitle = this.fileList.Text;
         }
 
-        private void UpdateConfig()
-        {
-            if (String.IsNullOrWhiteSpace(this.InstanceId) || String.IsNullOrWhiteSpace(this.FileId))
-            {
-                return;
-            }
-            this.Volume = this.checkSetVolume.Checked ? this.playBackVolume.Value : -1;
-            JObject configurationObject = JObject.FromObject(new
-            {
-                instanceId = this.InstanceId,
-                fileId = this.FileId,
-                volume = this.Volume
-            });
-            this._macroDeckAction.Configuration = configurationObject.ToString();
-            this._macroDeckAction.DisplayName = this._macroDeckAction.Name + " -> " + this.InstanceName + " : " + this.FileTitle + (this.Volume > -1 ? String.Format(" : {0}%", this.Volume) : "");
-        }
     }
 }

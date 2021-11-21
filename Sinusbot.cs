@@ -3,10 +3,20 @@ using RestSharp;
 using RestSharp.Serialization.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace SuchByte.SinusBotPlugin
 {
+    public class PlayingStateEventArgs : EventArgs
+    {
+        public bool NewState { get; set; }
+        public string FileId { get; set; }
+        public string TrackName { get; set; }
+    }
+
     public class Sinusbot
     {
         private readonly string _apiString = "/api/v1";
@@ -15,7 +25,15 @@ namespace SuchByte.SinusBotPlugin
         private readonly string _url = "";
         private readonly bool _loggedIn = false;
 
+        private bool _playing = false;
+        private string _fileId = "";
+
+        public event EventHandler<PlayingStateEventArgs> PlayingStateChanged;
+
         public bool LoggedIn { get { return this._loggedIn; } }
+        public bool Playing { get { return this._playing; } }
+
+        private Timer _stateUpdateTimer;
 
         public Sinusbot(string url = "", string username = "", string password = "")
         {
@@ -36,7 +54,48 @@ namespace SuchByte.SinusBotPlugin
             {
                 this._bearerToken = loginObj["token"];
                 this._loggedIn = true;
+
+                this._stateUpdateTimer = new Timer
+                {
+                    Interval = 1000,
+                    Enabled = true
+                };
+                this._stateUpdateTimer.Start();
+                this._stateUpdateTimer.Elapsed += StateUpdateTimer_Elapsed;
             }
+        }
+
+        private void StateUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                foreach (var instance in this.GetBotInstances())
+                {
+                    string instanceId = instance["uuid"].ToString();
+                    string instanceNick = instance["nick"].ToString();
+                    Dictionary<string, string> instanceStatus = this.GetInstanceStatus(instance["uuid"].ToString());
+                    if (instanceStatus == null) return;
+                    string playingStateString = instanceStatus["playing"];
+                    JObject currentTrack =  JObject.Parse(instanceStatus["currentTrack"]);
+                    string fileId = currentTrack["uuid"].ToString();
+                    string title = currentTrack["title"].ToString();
+                    bool.TryParse(playingStateString, out bool playingState);
+                    
+
+                    if (playingState != this._playing ||fileId != this._fileId)
+                    {
+                        this._playing = playingState;
+                        this._fileId = fileId;
+                        MacroDeck.Variables.VariableManager.SetValue(instanceNick + " title", title, MacroDeck.Variables.VariableType.String, PluginInstance.Main);
+                        MacroDeck.Variables.VariableManager.SetValue(instanceNick + " playing", playingState, MacroDeck.Variables.VariableType.Bool, PluginInstance.Main);
+                        if (PlayingStateChanged != null)
+                        {
+                            PlayingStateChanged(instanceId, new PlayingStateEventArgs { NewState = playingState, FileId = fileId, TrackName = title });
+                        }
+                    }
+                }
+                
+            });
         }
 
         public string GetInstanceId(string name)
@@ -158,6 +217,14 @@ namespace SuchByte.SinusBotPlugin
             return files;
         }
 
+        public Dictionary<string, string> GetInstanceStatus(string instanceId)
+        {
+            if (!this._loggedIn)
+                return null;
+
+            return this.ApiCallObject("/bot/i/" + instanceId + "/status", null, HttpRequestMethod.GET);
+        }
+
         public List<JObject> GetBotInstances()
         {
             if (!this._loggedIn)
@@ -193,6 +260,7 @@ namespace SuchByte.SinusBotPlugin
                     response = client.Post(request);
                     break;
             }
+
             return response;
         }
 
