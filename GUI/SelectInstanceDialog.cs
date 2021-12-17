@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SuchByte.MacroDeck.Plugins;
 using System.Threading.Tasks;
 using SuchByte.SinusBotPlugin.Language;
+using System.Diagnostics;
 
 namespace SuchByte.SinusBotPlugin.GUI
 {
@@ -48,9 +49,19 @@ namespace SuchByte.SinusBotPlugin.GUI
                 this.instanceBox.Items.Clear();
                 foreach (JObject instanceObject in Main.Sinusbot.GetBotInstances())
                 {
-                    this.instanceBox.Items.Add(instanceObject["name"]);
+                    this.instanceBox.Items.Add(instanceObject["nick"]);
                 }
-                this.instanceBox.SelectedIndex = 0;
+                if (!string.IsNullOrWhiteSpace(this._macroDeckAction.Configuration))
+                {
+                    JObject configObject = JObject.Parse(this._macroDeckAction.Configuration);
+                    if (configObject["instanceId"] != null)
+                    {
+                        this.instanceBox.Text = Main.Sinusbot.GetInstanceName(configObject["instanceId"].ToString());
+                    }
+                } else
+                {
+                    this.instanceBox.SelectedIndex = 0;
+                }
             }));
             
         }

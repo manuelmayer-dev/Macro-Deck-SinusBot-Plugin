@@ -37,21 +37,7 @@ namespace SuchByte.SinusBotPlugin
         }
 
         public override void Enable() {
-            PluginLanguageManager.Initialize();
-            Task.Run(() =>
-            {
-                List<Dictionary<string, string>> credentialsList = PluginCredentials.GetPluginCredentials(this);
-                Dictionary<string, string> credentials = null;
-                if (credentialsList.Count > 0)
-                {
-                    credentials = credentialsList[0];
-                }
-
-                if (credentials != null)
-                {
-                    Sinusbot = new Sinusbot(credentials["url"], credentials["username"], credentials["password"]);
-                }
-            });
+            PluginLanguageManager.Initialize(); 
             this.Actions = new List<PluginAction>
             {
                 new PlayBackFileAction(),
@@ -59,6 +45,24 @@ namespace SuchByte.SinusBotPlugin
                 new DecreaseVolumeAction(),
                 new IncreaseVolumeAction()
             };
+            Task.Run(() =>
+            {
+                try
+                {
+                    List<Dictionary<string, string>> credentialsList = PluginCredentials.GetPluginCredentials(this);
+                    Dictionary<string, string> credentials = null;
+                    if (credentialsList.Count > 0)
+                    {
+                        credentials = credentialsList[0];
+                    }
+
+                    if (credentials != null)
+                    {
+                        Sinusbot = new Sinusbot(credentials["url"], credentials["username"], credentials["password"]);
+                    }
+                } catch { }
+            });
+            
         }
 
         public override void OpenConfigurator()

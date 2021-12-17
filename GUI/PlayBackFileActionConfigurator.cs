@@ -73,7 +73,7 @@ namespace SuchByte.SinusBotPlugin.GUI
                 syncButtonState = this.checkSyncButtonState.Checked,
             }) ;
             this._macroDeckAction.Configuration = configurationObject.ToString();
-            this._macroDeckAction.ConfigurationSummary = this.InstanceName + " : " + this.FileTitle + (this.Volume > -1 ? String.Format(" : {0}%", this.Volume) : "") + (this.checkSyncButtonState.Checked ? " (button state = play state)" : "");
+            this._macroDeckAction.ConfigurationSummary = this.InstanceName + " : " + this.FileTitle + (this.Volume > -1 ? String.Format(" : {0}%", this.Volume) : "") + (this.checkSyncButtonState.Checked ? " (" + PluginLanguageManager.PluginStrings.SyncButtonState + ")" : "");
             return true;
         }
 
@@ -118,8 +118,9 @@ namespace SuchByte.SinusBotPlugin.GUI
                 this.instanceBox.Items.Clear();
                 foreach (JObject instanceObject in Main.Sinusbot.GetBotInstances())
                 {
-                    this.instanceBox.Items.Add(instanceObject["name"]);
+                    this.instanceBox.Items.Add(instanceObject["nick"]);
                 }
+
                 if (this.InstanceName != null && this.InstanceName.Length > 0)
                 {
                     this.instanceBox.Text = this.InstanceName;

@@ -39,6 +39,7 @@ namespace SuchByte.SinusBotPlugin.GUI
             {
                 this.inputUrl.Text = credentials["url"];
                 this.inputUser.Text = credentials["username"];
+                this.inputPassword.Text = credentials["password"];
             }
         }
 

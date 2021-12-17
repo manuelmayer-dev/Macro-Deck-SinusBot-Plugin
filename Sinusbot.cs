@@ -14,7 +14,6 @@ namespace SuchByte.SinusBotPlugin
     {
         public bool NewState { get; set; }
         public string FileId { get; set; }
-        public string TrackName { get; set; }
     }
 
     public class Sinusbot
@@ -25,13 +24,12 @@ namespace SuchByte.SinusBotPlugin
         private readonly string _url = "";
         private readonly bool _loggedIn = false;
 
-        private bool _playing = false;
-        private string _fileId = "";
+        private Dictionary<string, bool> _playing = new Dictionary<string, bool>();
+        private Dictionary<string, string> _fileId = new Dictionary<string, string>();
 
         public event EventHandler<PlayingStateEventArgs> PlayingStateChanged;
 
         public bool LoggedIn { get { return this._loggedIn; } }
-        public bool Playing { get { return this._playing; } }
 
         private Timer _stateUpdateTimer;
 
@@ -65,34 +63,51 @@ namespace SuchByte.SinusBotPlugin
             }
         }
 
+        private void Login()
+        {
+
+        }
+
         private void StateUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Task.Run(() =>
             {
                 foreach (var instance in this.GetBotInstances())
                 {
-                    string instanceId = instance["uuid"].ToString();
-                    string instanceNick = instance["nick"].ToString();
-                    Dictionary<string, string> instanceStatus = this.GetInstanceStatus(instance["uuid"].ToString());
-                    if (instanceStatus == null) return;
-                    string playingStateString = instanceStatus["playing"];
-                    JObject currentTrack =  JObject.Parse(instanceStatus["currentTrack"]);
-                    string fileId = currentTrack["uuid"].ToString();
-                    string title = currentTrack["title"].ToString();
-                    bool.TryParse(playingStateString, out bool playingState);
-                    
-
-                    if (playingState != this._playing ||fileId != this._fileId)
+                    try
                     {
-                        this._playing = playingState;
-                        this._fileId = fileId;
-                        MacroDeck.Variables.VariableManager.SetValue(instanceNick + " title", title, MacroDeck.Variables.VariableType.String, PluginInstance.Main);
-                        MacroDeck.Variables.VariableManager.SetValue(instanceNick + " playing", playingState, MacroDeck.Variables.VariableType.Bool, PluginInstance.Main);
-                        if (PlayingStateChanged != null)
+                        if (string.IsNullOrWhiteSpace(instance.ToString())) return;
+                        string instanceId = instance["uuid"].ToString();
+                        string instanceNick = instance["nick"].ToString();
+                        Dictionary<string, string> instanceStatus = this.GetInstanceStatus(instance["uuid"].ToString());
+                        if (instanceStatus == null) return;
+                        string playingStateString = instanceStatus["playing"];
+                        JObject currentTrack = JObject.Parse(instanceStatus["currentTrack"]);
+                        string fileId = currentTrack["uuid"].ToString();
+                        string title = currentTrack["title"].ToString();
+                        bool.TryParse(playingStateString, out bool playingState);
+
+
+                        if (!this._playing.ContainsKey(instanceId) || !this._fileId.ContainsKey(instanceId) || playingState != this._playing[instanceId] || fileId != this._fileId[instanceId])
                         {
-                            PlayingStateChanged(instanceId, new PlayingStateEventArgs { NewState = playingState, FileId = fileId, TrackName = title });
+                            // Send playing state stop when changing track
+                            if (playingState != false && this._fileId.ContainsKey(instanceId))
+                            {
+                                if (PlayingStateChanged != null)
+                                {
+                                    PlayingStateChanged(instanceId, new PlayingStateEventArgs { NewState = false, FileId = this._fileId[instanceId] });
+                                }
+                            }
+                            this._playing[instanceId] = playingState;
+                            this._fileId[instanceId] = fileId;
+                            MacroDeck.Variables.VariableManager.SetValue(instanceNick + " title", title, MacroDeck.Variables.VariableType.String, PluginInstance.Main);
+                            MacroDeck.Variables.VariableManager.SetValue(instanceNick + " playing", playingState, MacroDeck.Variables.VariableType.Bool, PluginInstance.Main);
+                            if (PlayingStateChanged != null)
+                            {
+                                PlayingStateChanged(instanceId, new PlayingStateEventArgs { NewState = playingState, FileId = fileId });
+                            }
                         }
-                    }
+                    } catch {}
                 }
                 
             });
@@ -106,7 +121,7 @@ namespace SuchByte.SinusBotPlugin
                 {
                     foreach (KeyValuePair<string, JToken> arg in instanceObject)
                     {
-                        if (arg.Key.Equals("name") && arg.Value.ToString().Equals(name))
+                        if (arg.Key.Equals("nick") && arg.Value.ToString().Equals(name))
                         {
                             return instanceObject["uuid"].ToString();
                         }
@@ -144,7 +159,7 @@ namespace SuchByte.SinusBotPlugin
                     {
                         if (arg.Key.Equals("uuid") && arg.Value.ToString().Equals(id))
                         {
-                            return instanceObject["name"].ToString();
+                            return instanceObject["nick"].ToString();
                         }
                     }
                 }
