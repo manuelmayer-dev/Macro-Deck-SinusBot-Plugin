@@ -45,6 +45,11 @@ namespace SuchByte.SinusBotPlugin
                 new DecreaseVolumeAction(),
                 new IncreaseVolumeAction()
             };
+            ConnectSinusBot();
+        }
+
+        public void ConnectSinusBot()
+        {
             Task.Run(() =>
             {
                 try
@@ -60,9 +65,9 @@ namespace SuchByte.SinusBotPlugin
                     {
                         Sinusbot = new Sinusbot(credentials["url"], credentials["username"], credentials["password"]);
                     }
-                } catch { }
+                }
+                catch { }
             });
-            
         }
 
         public override void OpenConfigurator()

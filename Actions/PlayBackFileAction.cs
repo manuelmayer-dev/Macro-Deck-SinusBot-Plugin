@@ -41,6 +41,7 @@ namespace SuchByte.SinusBotPlugin.Actions
 
         public override void OnActionButtonLoaded()
         {
+            if (Main.Sinusbot == null) return;
             Main.Sinusbot.PlayingStateChanged += Sinusbot_PlayingStateChanged;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Serialization.Json;
+using SuchByte.MacroDeck.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,28 +39,42 @@ namespace SuchByte.SinusBotPlugin
             this._url = url;
             try
             {
-                this._botId = ApiCallObject("/botId", null, HttpRequestMethod.GET)["defaultBotId"];
-            } catch { }
-
-            Dictionary<string, string> loginObj = ApiCallObject("/bot/login", new Dictionary<string, string>
-            {
-                { "username", username },
-                { "password", password },
-                { "botId", this._botId }
-            }, HttpRequestMethod.POST);
-
-            if (loginObj != null)
-            {
-                this._bearerToken = loginObj["token"];
-                this._loggedIn = true;
-
-                this._stateUpdateTimer = new Timer
+                var botIdCall = ApiCallObject("/botId", null, HttpRequestMethod.GET);
+                if (botIdCall != null && botIdCall["defaultBotId"] != null)
                 {
-                    Interval = 1000,
-                    Enabled = true
-                };
-                this._stateUpdateTimer.Start();
-                this._stateUpdateTimer.Elapsed += StateUpdateTimer_Elapsed;
+                    this._botId = botIdCall["defaultBotId"];
+                }
+
+                if (string.IsNullOrWhiteSpace(this._botId))
+                {
+                    MacroDeckLogger.Warning(PluginInstance.Main, $"Could not initialize SinusBot instance because the BotId was null");
+                    return;
+                }
+                var loginCall = ApiCallObject("/bot/login", new Dictionary<string, string>
+                {
+                    { "username", username },
+                    { "password", password },
+                    { "botId", this._botId }
+                }, HttpRequestMethod.POST);
+
+                    if (loginCall != null)
+                    {
+                        this._bearerToken = loginCall["token"];
+                        this._loggedIn = true;
+
+                        MacroDeckLogger.Info(PluginInstance.Main, $"Successfully connected to { this._url + Environment.NewLine + $"BotId: { this._botId }" }");
+
+                        this._stateUpdateTimer = new Timer
+                        {
+                            Interval = 1000,
+                            Enabled = true
+                        };
+                        this._stateUpdateTimer.Start();
+                        this._stateUpdateTimer.Elapsed += StateUpdateTimer_Elapsed;
+                    }
+            } catch (Exception ex)
+            {
+                MacroDeckLogger.Error(PluginInstance.Main, $"Error while starting SinusBot instance: { ex.Message + Environment.NewLine + ex.StackTrace }");
             }
         }
 
