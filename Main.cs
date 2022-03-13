@@ -27,9 +27,7 @@ namespace SuchByte.SinusBotPlugin
     public class Main : MacroDeckPlugin
     {
         public static Sinusbot Sinusbot;
-        public override string Description => "This plugin can control a SinusBot music bot.";
         public override bool CanConfigure => true;
-        public override Image Icon => Properties.Resources.SinusBot_Plugin;
 
         public Main()
         {
