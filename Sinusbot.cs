@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Serialization.Json;
 using SuchByte.MacroDeck.Logging;
 using System;
 using System.Collections.Generic;
@@ -115,8 +115,8 @@ namespace SuchByte.SinusBotPlugin
                             }
                             this._playing[instanceId] = playingState;
                             this._fileId[instanceId] = fileId;
-                            MacroDeck.Variables.VariableManager.SetValue(instanceNick + " title", title, MacroDeck.Variables.VariableType.String, PluginInstance.Main);
-                            MacroDeck.Variables.VariableManager.SetValue(instanceNick + " playing", playingState, MacroDeck.Variables.VariableType.Bool, PluginInstance.Main);
+                            MacroDeck.Variables.VariableManager.SetValue(instanceNick + " title", title, MacroDeck.Variables.VariableType.String, PluginInstance.Main, null);
+                            MacroDeck.Variables.VariableManager.SetValue(instanceNick + " playing", playingState, MacroDeck.Variables.VariableType.Bool, PluginInstance.Main, null);
                             if (PlayingStateChanged != null)
                             {
                                 PlayingStateChanged(instanceId, new PlayingStateEventArgs { NewState = playingState, FileId = fileId });
@@ -268,7 +268,7 @@ namespace SuchByte.SinusBotPlugin
             return instances;
         }
 
-        private IRestResponse ApiCall(string api, Dictionary<string, string> args, HttpRequestMethod httpRequestMethod)
+        private RestResponse ApiCall(string api, Dictionary<string, string> args, HttpRequestMethod httpRequestMethod)
         {
             var client = new RestClient(this._url);
             client.AddDefaultHeader("Authorization", string.Format("Bearer {0}", this._bearerToken));
@@ -280,7 +280,7 @@ namespace SuchByte.SinusBotPlugin
                     request.AddParameter(arg.Key, arg.Value);
                 }
             }
-            IRestResponse response = null;
+            RestResponse response = null;
             switch (httpRequestMethod)
             {
                 case HttpRequestMethod.GET:
@@ -296,34 +296,14 @@ namespace SuchByte.SinusBotPlugin
 
         private Dictionary<string, string> ApiCallObject(string api, Dictionary<string, string> args, HttpRequestMethod httpRequestMethod)
         {
-            Dictionary<string, string> jsonObject;
             var response = this.ApiCall(api, args, httpRequestMethod);
-            JsonDeserializer deserial = new JsonDeserializer();
-            try
-            {
-                jsonObject = deserial.Deserialize<Dictionary<string, string>>(response);
-            }
-            catch
-            {
-                jsonObject = null;
-            }
-            return jsonObject;
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
         }
 
         private List<string> ApiCallArray(string api, Dictionary<string, string> args, HttpRequestMethod httpRequestMethod)
         {
-            List<string> jsonArray;
             var response = this.ApiCall(api, args, httpRequestMethod);
-            JsonDeserializer deserial = new JsonDeserializer();
-            try
-            {
-                jsonArray = deserial.Deserialize<List<string>>(response);
-            }
-            catch
-            {
-                jsonArray = null;
-            }
-            return jsonArray;
+            return JsonConvert.DeserializeObject<List<string>>(response.Content);
         }
     }
 
